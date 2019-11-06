@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { tileLayer, latLng, circle, polygon, map, marker } from 'leaflet';
+import { tileLayer, latLng, marker } from 'leaflet';
 import * as L from 'leaflet';
 import { LocationService } from './services/location.service';
 
@@ -17,10 +17,19 @@ options = {};
 layersControl = {};
 markerLayers = [];
 center=[];
+
 constructor(private lactionService : LocationService) {
   this.locationMap();
  }
+
+ ngOnInit() {
+  this.lactionService.getCountriesList().subscribe(data =>{
+    this.countrylist = data;
+  })
+}
+
 locationMap(){
+
   this.options = {
     layers: [
       tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: 'Location' })
@@ -28,6 +37,7 @@ locationMap(){
     zoom: 4,
     center: latLng(this.latitude, this.longitude)
   };
+
   this.layersControl = {
     baseLayers: {
       'Open Street Map': tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
@@ -42,18 +52,16 @@ locationMap(){
 	     layers: 'lulc:lulc-global-grid-prob-urban-expansion-2030'
       })
     }
-  }
+  };
+
   this.markerLayers=[
     marker([this.latitude, this.longitude]).bindTooltip(this.countryName).openTooltip()
   ];
+  
   this.center = [this.latitude, this.longitude]
 }
-  ngOnInit() {
-    this.lactionService.getCountriesList().subscribe(data =>{
-      this.countrylist = data;
-    })
-  }
-  selectCountry(name) {
+  
+  selectCountry(name: string) {
     this.lactionService.getLocationDetails(name).subscribe(data =>{
       this.latitude = data[0].latlng[0];
       this.longitude = data[0].latlng[1];

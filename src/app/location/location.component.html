@@ -9,7 +9,7 @@
       <div class="col-12">
         <div class="typeHead">
           <span class="find-location-header">Find Location : </span>
-          <input type="text" list="countries" name="country" [(ngModel)]='selected' (change)="selectCountry(selected)" />
+          <input type="text" placeholder="Enter" list="countries" name="country" [(ngModel)]='selected' (change)="selectCountry(selected)" />
           <datalist id="countries">
             <select>
               <option *ngFor="let country of countrylist" [value]="country.name"></option>
@@ -18,7 +18,7 @@
         </div>
         <div  style="height: 500px;"
         leaflet 
-        [leafletOptions]="options" [leafletLayersControl]="layersControl" [(leafletCenter)]="center" [leafletLayers]="markerLayers">
+        [leafletOptions]="options" [leafletLayersControl]="layersControl" [leafletCenter]="center" [leafletLayers]="markerLayers">
         </div>
       </div>
     </div>
