@@ -1,0 +1,24 @@
+   <div class="row header-section">
+        <div class="col-12">
+            <h1 class="location-header">Location Map</h1>
+            <h5 class="sub-heading">Angular 7 - Leaflet Web map application POC</h5>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="typeHead">
+          <span class="find-location-header">Find Location : </span>
+          <input type="text" list="countries" name="country" [(ngModel)]='selected' (change)="selectCountry(selected)" />
+          <datalist id="countries">
+            <select>
+              <option *ngFor="let country of countrylist" [value]="country.name"></option>
+            </select>
+          </datalist>
+        </div>
+        <div  style="height: 500px;"
+        leaflet 
+        [leafletOptions]="options" [leafletLayersControl]="layersControl" [(leafletCenter)]="center" [leafletLayers]="markerLayers">
+        </div>
+      </div>
+    </div>
